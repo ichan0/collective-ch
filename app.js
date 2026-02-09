@@ -56,6 +56,10 @@ function renderList() {
                 <li>
                     <button onclick="navigate('view','${c.id}')">
                         ${c.title}
+                        <small>
+                            <!-- ${c.startDate || "?"} - ${c.endDate || "?"} -->
+                            (${c.startDate ? new Date(c.startDate).toLocaleDateString() : "No start date"} - ${c.endDate ? new Date(c.endDate).toLocaleDateString() : "No end date"})
+                        </small>
                     </button>
                 </li>
             `).join("")}
@@ -68,6 +72,17 @@ function renderCreate() {
     view.innerHTML = `
         <h2> Create Chapter</h2>
         <input id="title" placeholder="Chapter Title" /><br><br>
+
+        <div>
+            <label>Start Date</label>
+            <input id="startDate" type="date" />
+        </div><br>
+
+        <div>
+            <label>End Date</label>
+            <input id="endDate" type="date" />
+        </div><br>
+
         <textarea id="narrative" placeholder="What happened during this part of your life?"></textarea><br><br>
         <textarea id="keyMoments" placeholder="Key moments"></textarea><br><br>
         <textarea id="reflection" placeholder="Reflection"></textarea><br><br>
@@ -81,8 +96,8 @@ function renderCreate() {
         const newChapter = {
             id: crypto.randomUUID(),
             title: document.getElementById("title").value,
-            startDate: "",
-            endDate: "",
+            startDate: document.getElementById("startDate").value,
+            endDate: document.getElementById("endDate").value,
             narrative: document.getElementById("narrative").value,
             keyMoments: document.getElementById("keyMoments").value,
             reflection: document.getElementById("reflection").value,
@@ -117,6 +132,13 @@ function renderEdit(id) {
     view.innerHTML = `
         <h2>Edit Chapter</h2>
         <input id="title" value="${chapter.title}" placeholder="Chapter Title" /><br><br>
+
+        <label>Start Date</label>
+        <input id="startDate" type="date" value="${chapter.startDate}" /><br><br>
+
+        <label>End Date</label>
+        <input id="endDate" type="date" value="${chapter.endDate}" /><br><br>
+
         <textarea id="narrative" placeholder="What happened during this part of your life?">${chapter.narrative}</textarea><br><br>
         <textarea id="keyMoments" placeholder="Key moments">${chapter.keyMoments}</textarea><br><br>
         <textarea id="reflection" placeholder="Reflection">${chapter.reflection}</textarea><br><br>
@@ -127,6 +149,8 @@ function renderEdit(id) {
         const updatedChapter = {
             ...chapter,
             title: document.getElementById("title").value,
+            startDate: document.getElementById("startDate").value,
+            endDate: document.getElementById("endDate").value,
             narrative: document.getElementById("narrative").value,
             keyMoments: document.getElementById("keyMoments").value,
             reflection: document.getElementById("reflection").value,
@@ -148,6 +172,8 @@ function renderView(id) {
     }
     view.innerHTML = `
         <h2>${chapters.title}</h2>
+        <p><em>${chapters.startDate ? new Date(chapters.startDate).toLocaleDateString() : "No start date"} - ${chapters.endDate ? new Date(chapters.endDate).toLocaleDateString() : "No end date"}</em></p>
+        <p><em>Edited on ${new Date(chapters.updatedAt).toLocaleString()}</em></p>
         <p>${chapters.narrative}</p> 
         <button onclick="navigate('edit', '${chapters.id}')">Edit</button>
         <!-- maybe delete -->
