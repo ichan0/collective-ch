@@ -105,6 +105,11 @@ function renderCreate() {
             updatedAt: now
         };
 
+        if (!newChapter.title) {
+            alert("Please enter a title.");
+            return;
+        }
+
         chapters.push(newChapter);
         saveChapters(chapters);
         navigate("list");
@@ -156,6 +161,11 @@ function renderEdit(id) {
             reflection: document.getElementById("reflection").value,
             updatedAt: Date.now()
         };
+
+        if (!updatedChapter.title) {
+            alert("Please enter a title.");
+            return;
+        }
         updateChapter(updatedChapter);
         navigate("view", updatedChapter.id);
     };
@@ -185,3 +195,8 @@ function renderView(id) {
 }
 
 navigate("home");
+
+// For future improvements: add an import/export feature, so users can back up their data or move it between devices. This could be done by allowing users to download their chapters as a JSON file, and upload it later to restore their data. 
+// Also, consider adding a search or filter feature to the chapter list, so users can easily find specific chapters based on keywords, dates, or other criteria. This would enhance the usability of the app as the number of chapters grows.
+// A tagging system which allows users to assign tags to their chapters (e.g., "Career", "Family", "Travel") would be helpful. It would provide another way to organize and navigate through their life story.
+// A delete function for chapters, with a confirmation prompt to prevent accidental deletions. This would give users more control over their content and help them manage their life story more effectively.
