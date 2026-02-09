@@ -133,11 +133,12 @@ main {
 }
 
 #keyMoments {
+  width: 50%;
   min-height: 50px;
 }
 
 #reflection {
-  width: 60%;
+  width: 80%;
   min-height: 80px;
 }
 
