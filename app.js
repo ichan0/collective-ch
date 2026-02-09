@@ -90,6 +90,14 @@ function renderCreate() {
         <button id="save">Create Chapter</button>
     `;
 
+    const narrative = document.getElementById("narrative");
+    const keyMoments = document.getElementById("keyMoments");
+    const reflection = document.getElementById("reflection");
+
+    narrative.oninput = () => autoGrow(narrative);
+    keyMoments.oninput = () => autoGrow(keyMoments);
+    reflection.oninput = () => autoGrow(reflection);
+
     document.getElementById("save").onclick = () => {
         const chapters = getChapters();
         const now = Date.now();
@@ -134,6 +142,13 @@ function renderEdit(id) {
         view.innerHTML = "<p>Chapter not found.</p>";
         return;
     }
+
+    // ["narrative", "keyMoments", "reflection"].forEach(id => {
+    //     const textarea = document.getElementById(id);
+    //     autoGrow(textarea);
+    //     textarea.addEventListener("input", () => autoGrow(textarea));
+    // });
+
     view.innerHTML = `
         <h2>Edit Chapter</h2>
         <input id="title" value="${chapter.title}" placeholder="Chapter Title" /><br><br>
@@ -149,16 +164,35 @@ function renderEdit(id) {
         <textarea id="reflection" placeholder="Reflection">${chapter.reflection}</textarea><br><br>
         <button id="save">Save Changes</button>
     `;
+
+    const title = document.getElementById("title");
+    const startDate = document.getElementById("startDate");
+    const endDate = document.getElementById("endDate");
+    const narrative = document.getElementById("narrative");
+    const keyMoments = document.getElementById("keyMoments");
+    const reflection = document.getElementById("reflection");
+    const saveBtn = document.getElementById("save");
     
-    document.getElementById("save").onclick = () => {
+
+    // narrative.oninput = () => autoGrow(narrative);
+    // keyMoments.oninput = () => autoGrow(keyMoments);
+    // reflection.oninput = () => autoGrow(reflection);
+        
+    ["narrative", "keyMoments", "reflection"].forEach(id => {
+        const textarea = document.getElementById(id);
+        autoGrow(textarea);
+        textarea.addEventListener("input", () => autoGrow(textarea));
+    });
+
+    saveBtn.onclick = () => {
         const updatedChapter = {
-            ...chapter,
-            title: document.getElementById("title").value,
-            startDate: document.getElementById("startDate").value,
-            endDate: document.getElementById("endDate").value,
-            narrative: document.getElementById("narrative").value,
-            keyMoments: document.getElementById("keyMoments").value,
-            reflection: document.getElementById("reflection").value,
+            ...chapter, 
+            title: title.value,
+            startDate: startDate.value,
+            endDate: endDate.value,
+            narrative: narrative.value,
+            keyMoments: keyMoments.value,
+            reflection: reflection.value,
             updatedAt: Date.now()
         };
 
@@ -172,6 +206,10 @@ function renderEdit(id) {
 }
 
 
+function autoGrow(textarea) {
+    textarea.style.height = "auto";
+    textarea.style.height = (textarea.scrollHeight) + "px";
+}
 
 // View Chapter page
 function renderView(id) {
