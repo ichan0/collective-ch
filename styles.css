@@ -42,3 +42,21 @@ h2 {
   font-family: 'Rethink Sans', sans-serif;
   font-size: 36px;
 }
+
+#title {
+  min-width: 200px;
+  
+}
+#narrative {
+  min-width: 600px;
+  min-height: 100px;
+}
+
+#keyMoments {
+  min-height: 50px;
+}
+
+#reflection {
+  min-width: 250px;
+  min-height: 80px;
+}
